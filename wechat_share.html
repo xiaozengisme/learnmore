@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>你好，世界!</title>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+  	<div class="container-fluid" style="margin-top:10px">
+    	<h1>你好，世界！</h1>
+  	</div>
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+	wx.config({
+	    debug: false,
+	    appId: '{$jssdk.appId}',
+	    timestamp: {$jssdk.timestamp},
+	    nonceStr: '{$jssdk.nonceStr}',
+	    signature: '{$jssdk.signature}',
+	    jsApiList: [
+	      'checkJsApi',
+	      'onMenuShareTimeline',
+	      'onMenuShareAppMessage',
+	      'onMenuShareQQ',
+	      'onMenuShareWeibo'
+	    ]
+	});
+	  
+	wx.ready(function(){
+		var shareData = {
+			title: '互联网之子',
+			desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+			link: 'http://movie.douban.com/subject/25785114/',
+			imgUrl: 'http://demo.open.weixin.qq.com/jssdk/images/p2166127561.jpg',
+			trigger: function (res) {
+			  //alert('用户点击发送给朋友');
+			},
+			success: function (res) {
+			  //alert('已分享');
+			},
+			cancel: function (res) {
+			  //alert('已取消');
+			},
+			fail: function (res) {
+			  alert(JSON.stringify(res));
+			}
+		};
+		wx.onMenuShareAppMessage(shareData);
+		wx.onMenuShareTimeline(shareData);
+		wx.onMenuShareQQ(shareData);
+		wx.onMenuShareWeibo(shareData);
+		
+	});
+	</script>
+	
+  </body>
+</html>
