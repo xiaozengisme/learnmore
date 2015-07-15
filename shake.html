@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>SHAKE</title>
+</head>
+<body>
+<h1>hello world!</h1>
+<p id="show"></p>
+<p id="count" style="font-size:64px"></p>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	if (window.DeviceMotionEvent) {
+		alert(window.DeviceMotionEvent);
+		window.addEventListener('devicemotion', deviceMotionHandler, false);
+	}
+
+	var SHAKE_THRESHOLD = 800;
+	var last_update = 0;
+	var x, y, z, last_x = 0, last_y = 0, last_z = 0;
+	var count = 0;
+
+	function deviceMotionHandler(eventData) {
+		var acceleration = eventData.accelerationIncludingGravity; // 获取含重力的加速度
+		var myDate = new Date();
+		var curTime = myDate.getTime(); // 获取当前时间
+		if ((curTime - last_update) > 100) {
+			var diffTime = curTime - last_update; //时间差
+			last_update = curTime;
+			x = acceleration.x;
+			y = acceleration.y;
+			z = acceleration.z;
+			var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+			
+			$("#show").html(speed);
+
+			if (speed > SHAKE_THRESHOLD) {
+				count++;
+				$("#count").html(count);
+				/*if (count >= 100) {
+					count=0;
+				}*/
+			}
+		}
+	}
+
+/*	setInterval(function(){
+		if(count>0){
+			alert('stop')
+			count=0;
+		}
+	},90);*/
+});
+</script>
+</body>
+</html>
