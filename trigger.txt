@@ -1,0 +1,4 @@
+CREATE TRIGGER `nonono` AFTER INSERT ON `guizu_login_log`
+ FOR EACH ROW update guizu_user set lianxudenglu=lianxudenglu+1 where id=NEW.uid
+
+在guizu_login_log插入一条数据后，更新guizu_user表id为新插入的记录的uid的lianxudenglu+1
